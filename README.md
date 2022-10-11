@@ -22,6 +22,10 @@ pip install tensorflow
 ```
 pip install tensorflow-gpu
 ```
+Open-CV:
+```
+pip install opencv-python
+```
 
 Some other dependencies:
 ```
