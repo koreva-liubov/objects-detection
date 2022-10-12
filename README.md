@@ -47,9 +47,8 @@ ls object_detection/protos/*.proto
 ```
 ## Run object detection code
 ```
-git clone https://github.com/koreva-liubov/objects-detection.git
-cp detection.py models/research
+cp object-detection.py models/research
 cd models/research
-python detection.py
+python object-detection.py
 ```
 
