@@ -51,4 +51,13 @@ cp object-detection.py models/research
 cd models/research
 python object-detection.py
 ```
+# Object Detection Using OpenCV
 
+## Get dependencies
+Download the pre-trained YOLO weight file (237 MB): https://pjreddie.com/media/files/yolov3.weights
+
+## Run object detection code
+```
+cd opencv
+python cv-detection.py
+```
