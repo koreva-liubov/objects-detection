@@ -3,7 +3,8 @@ import numpy as np
 import time
 
 #img = cv.imread('test-files/dog_in_office.jpeg')
-img = cv.imread('test-files/muffins.jpeg')
+#img = cv.imread('test-files/muffins.jpeg')
+img = cv.imread('test-files/doodle.png')
 cv.imshow('window',  img)
 cv.waitKey(1)
 
@@ -88,8 +89,7 @@ if len(indices) > 0:
         color = [int(c) for c in colors[classIDs[i]]]
         cv.rectangle(img, (x, y), (x + w, y + h), color, 2)
         text = "{}: {:.4f}".format(classes[classIDs[i]], confidences[i])
-        #cv.putText(img, text, (x, y - 5), cv.FONT_HERSHEY_TRIPLEX, 0.5, color, 1)
-        cv.putText(img, text, (x, y - 5), cv.FONT_HERSHEY_PLAIN, 0.9, 50, 1)
+        cv.putText(img, text, (x, y - 5), cv.FONT_HERSHEY_PLAIN, 0.9, 50, 2)
 
 cv.imshow('window', img)
 cv.waitKey(0)
