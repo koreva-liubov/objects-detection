@@ -62,6 +62,12 @@ cd models/research
 protoc --python_out=. object_detection/protos/*.proto
 ls object_detection/protos/*.proto
 ```
+## Telegram bot integration
+If you want to sent notifications to Telegram, you have to create a bot 
+and provide its credentials in the corresponding function in the code.
+To create a Telegram bot you need to use another Telegram bot, BotFather. 
+Just talk to him (press start): https://telegram.me/botfather
+
 ## Run object detection code
 ```
 cp tensorflow/*-detection.py models/research
