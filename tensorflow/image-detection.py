@@ -28,6 +28,21 @@ def load_coco_model():
     model_dir = pathlib.Path(model_dir)/"saved_model"
     return category_index, str(model_dir)
 
+def load_kitty_model():
+    while "models" in pathlib.Path.cwd().parts:
+        os.chdir('..')
+
+    PATH_TO_LABELS = 'models/research/object_detection/data/mscoco_complete_label_map.pbtxt'
+    category_index = label_map_util.create_category_index_from_labelmap(PATH_TO_LABELS, use_display_name=True)
+    base_url = 'http://download.tensorflow.org/models/object_detection/tf2/20200711/'
+    model_name = 'ssd_resnet50_v1_fpn_640x640_coco17_tpu-8'
+    model_file = model_name + '.tar.gz'
+    model_dir = tf.keras.utils.get_file(fname = model_name,
+                                        origin = base_url + model_file,
+                                        untar = True)
+    model_dir = pathlib.Path(model_dir)/"saved_model"
+    return category_index, str(model_dir)
+
 
 def run_inference_for_single_image(model, image):
   image = np.asarray(image)
@@ -64,37 +79,10 @@ def run_inference_for_single_image(model, image):
   return output_dict
 
 
-def get_classes_name_and_scores(
-    boxes,
-    classes,
-    scores,
-    category_index,
-    max_boxes_to_draw=20,
-    min_score_thresh=.8): # returns bigger than 80% precision
-    display_str = {}
-    if not max_boxes_to_draw:
-        max_boxes_to_draw = boxes.shape[0]
-    for i in range(min(max_boxes_to_draw, boxes.shape[0])):
-        if scores is None or scores[i] > min_score_thresh:
-            if classes[i] in six.viewkeys(category_index):
-                if (category_index[classes[i]]['name'] not in objects_set):
-                    telegram_bot_sendtext(category_index[classes[i]]['name'] + " detected!")
-                    print("Adding ", category_index[classes[i]]['name'], " to the set")
-                    objects_set.add(category_index[classes[i]]['name'])
-                    display_str['name'] = category_index[classes[i]]['name']
-                    display_str['score'] = '{}%'.format(int(100 * scores[i]))
-
-    if display_str:
-        print(display_str)
-
-
 def show_inference(model, image_path):
   # the array based representation of the image will be used later in order to prepare the
   # result image with boxes and labels on it.
-  image_np = np.array(Image.open(image_path))
-
-
-  # Actual detection.
+  image_np = np.array(cv2.imread(image_path, cv2.IMREAD_COLOR))
     
   output_dict = run_inference_for_single_image(model, image_np)
   # Visualization of the results of a detection.
@@ -108,17 +96,14 @@ def show_inference(model, image_path):
       use_normalized_coordinates=True,
       line_thickness=8)
 
-  # display(Image.fromarray(image_np))
-  print("AA")
   cv2.imshow('object detection', image_np)
-  print("BB")
   cv2.waitKey(0)
-  print("CC")
-  #cv2.destroyAllWindows()
 
 
-category_index, model_str = load_coco_model()
+#category_index, model_str = load_coco_model()
+category_index, model_str = load_kitty_model()
 detection_model = tf.saved_model.load(model_str)
 
 #show_inference(detection_model, "models/research/object_detection/test_images/image1.jpg")
-show_inference(detection_model, "muffins.jpg")
+show_inference(detection_model, "models/research/muffins.jpeg")
+cv2.destroyAllWindows()
