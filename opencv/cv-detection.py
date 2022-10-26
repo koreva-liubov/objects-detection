@@ -1,5 +1,18 @@
 import cv2
+import requests
 import numpy as np
+
+
+def telegram_bot_sendtext(bot_message):
+
+   bot_token = 'REDACTED'
+   bot_chatID = 'REDACTED'
+   send_text = 'https://api.telegram.org/bot' + bot_token + '/sendMessage?chat_id=' + bot_chatID + '&parse_mode=Markdown&text=' + bot_message
+
+   response = requests.get(send_text)
+
+   return response.json()
+
 
 # Load Yolo
 print("LOADING YOLO")
@@ -9,6 +22,7 @@ net.setPreferableBackend(cv2.dnn.DNN_BACKEND_OPENCV)
 
 #save all the names in file o the list classes
 classes = []
+objects_set = set()
 with open("coco.names", "r") as f:
     classes = [line.strip() for line in f.readlines()]
 #get layers of the network
@@ -69,6 +83,9 @@ while True:
             color = colors[class_ids[i]]
             cv2.rectangle(img, (x, y), (x + w, y + h), color, 2)
             cv2.putText(img, label, (x, y + 30), font, 2, color, 1)
+            if (label not in objects_set):
+                telegram_bot_sendtext("OpenCV detected " + label)
+                objects_set.add(label)
 
     cv2.imshow("Image",cv2.resize(img, (800,600)))
     if cv2.waitKey(1) & 0xFF == ord('q'):
