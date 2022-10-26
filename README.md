@@ -1,3 +1,20 @@
+# Object Detection Using OpenCV
+
+## Get dependencies
+Download the pre-trained YOLO weight file (237 MB): https://pjreddie.com/media/files/yolov3.weights
+
+Install Open-CV
+```
+pip install opencv-python
+```
+
+## Run object detection code
+```
+cd opencv
+python cv-detection.py
+python pic-detection.py
+```
+
 # Object Detection Using Tensorflow
 
 ## Get Tensorflow Object detection API 
@@ -47,17 +64,9 @@ ls object_detection/protos/*.proto
 ```
 ## Run object detection code
 ```
-cp object-detection.py models/research
+cp tensorflow/*-detection.py models/research
 cd models/research
 python object-detection.py
+python image-detection.py
 ```
-# Object Detection Using OpenCV
 
-## Get dependencies
-Download the pre-trained YOLO weight file (237 MB): https://pjreddie.com/media/files/yolov3.weights
-
-## Run object detection code
-```
-cd opencv
-python cv-detection.py
-```
