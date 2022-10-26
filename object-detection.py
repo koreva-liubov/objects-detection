@@ -72,7 +72,7 @@ def get_classes_name_and_scores(
         if scores is None or scores[i] > min_score_thresh:
             if classes[i] in six.viewkeys(category_index):
                 if (category_index[classes[i]]['name'] not in objects_set):
-                    telegram_bot_sendtext(category_index[classes[i]]['name'] + " detected!")
+                    # telegram_bot_sendtext(category_index[classes[i]]['name'] + " detected!")
                     print("Adding ", category_index[classes[i]]['name'], " to the set")
                     objects_set.add(category_index[classes[i]]['name'])
                     display_str['name'] = category_index[classes[i]]['name']
