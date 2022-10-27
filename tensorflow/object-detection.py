@@ -127,7 +127,8 @@ video_capture = cv2.VideoCapture(0)
 while True:
     re, frame = video_capture.read()
     Imagenp = show_inference(detection_model, frame)
-    cv2.imshow('object detection', cv2.resize(Imagenp, (1024, 640)))
+    #cv2.imshow('object detection', cv2.resize(Imagenp, (1024, 640)))
+    cv2.imshow('object detection', Imagenp)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 video_capture.release()
