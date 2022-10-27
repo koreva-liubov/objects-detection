@@ -87,6 +87,7 @@ while True:
                 telegram_bot_sendtext("OpenCV detected " + label)
                 objects_set.add(label)
 
+    #cv2.imshow("Image", img)
     cv2.imshow("Image",cv2.resize(img, (800,600)))
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
